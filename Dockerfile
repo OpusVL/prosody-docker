@@ -10,9 +10,9 @@ RUN set -ex; \
 		build-essential \
 		ca-certificates \
 		curl \
-		lua5.2 \
-		liblua5.2 \
-		liblua5.2-dev \
+		lua5.1 \
+		liblua5.1 \
+		liblua5.1-dev \
 		libssl1.0.2 \
 		libssl-dev \
 		libidn11 \
@@ -40,9 +40,9 @@ RUN set -ex; \
 
 WORKDIR /usr/src/prosody-$PROSODY_VERSION
 
-RUN ${PWD}/configure	--lua-version=5.2 \
+RUN ${PWD}/configure	--ostype=debian \
+			--prefix=/usr \
 			--sysconfdir=/etc/prosody \
-			--libdir=/lib \
 			--datadir=/var/lib/prosody
 
 RUN make \
