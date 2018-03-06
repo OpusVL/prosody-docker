@@ -7,16 +7,12 @@ RUN set -ex; \
 	\
 	apt-get update -qq; \
 	apt-get install -y -qq --no-install-suggests --no-install-recommends \
-		build-essential \
 		ca-certificates \
 		curl \
 		lua5.1 \
 		liblua5.1 \
-		liblua5.1-dev \
 		libssl1.0.2 \
-		libssl-dev \
 		libidn11 \
-		libidn11-dev \
 		lua-sec \
 		lua-event \
 		lua-zlib \
@@ -24,10 +20,7 @@ RUN set -ex; \
 		lua-bitop \
 		lua-socket \
 		lua-expat \
-		lua-filesystem \
-	; \
-        apt-get clean; \
-	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+		lua-filesystem
 
 ENV PROSODY_VERSION 0.10.0
 ENV PROSODY_SHA1 57c1c5a665e6453bdde06727ef398cd69accd9d7
@@ -40,15 +33,29 @@ RUN set -ex; \
 
 WORKDIR /usr/src/prosody-$PROSODY_VERSION
 
-RUN ${PWD}/configure	--ostype=debian \
-			--prefix=/usr \
-			--sysconfdir=/etc/prosody \
-			--datadir=/var/lib/prosody
-
-RUN make \
-    && make install
+RUN set -ex; \
+	\
+	savedAptMark="$(apt-mark showmanual)"; \
+	\
+	apt-get install -y -qq --no-install-suggests --no-install-recommends \
+		build-essential \
+		liblua5.1-dev \
+		libidn11-dev \
+		libssl-dev \
+	; \
+	\
+	${PWD}/configure --ostype=debian --prefix=/usr --sysconfdir=/etc/prosody --datadir=/var/lib/prosody; \
+	make && make install; \
+	\
+	apt-mark auto '.*' > /dev/null; \
+	apt-mark manual $savedAptMark; \
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+	rm -rf /var/lib/apt/lists/*
 
 RUN useradd -ms /bin/bash prosody
+
+COPY docker-entrypoint.sh /usr/local/bin/
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 USER prosody:prosody
 CMD ["prosodyctl", "start"]
