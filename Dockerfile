@@ -42,10 +42,14 @@ RUN set -ex; \
 		liblua5.1-dev \
 		libidn11-dev \
 		libssl-dev \
+		mercurial \
 	; \
 	\
 	${PWD}/configure --ostype=debian --prefix=/usr --sysconfdir=/etc/prosody --datadir=/var/lib/prosody; \
 	make && make install; \
+	\
+	hg clone https://hg.prosody.im/prosody-modules/ /opt/prosody-modules-available/ \
+	&& mkdir /opt/prosody-modules-enabled; \
 	\
 	apt-mark auto '.*' > /dev/null; \
 	apt-mark manual $savedAptMark; \
