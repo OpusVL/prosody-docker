@@ -52,7 +52,11 @@ RUN set -ex; \
 	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
 	rm -rf /var/lib/apt/lists/*
 
-RUN useradd -ms /bin/bash prosody
+ADD prosody.cfg.lua /etc/prosody/prosody.cfg.lua
+
+RUN useradd -ms /bin/bash prosody \
+    && chown -R prosody:prosody /etc/prosody/* \
+    && chmod -R 760 /etc/prosody/*
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]

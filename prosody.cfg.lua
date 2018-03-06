@@ -27,6 +27,9 @@ admins = { }
 -- For more information see: https://prosody.im/doc/libevent
 --use_libevent = true
 
+daemonize = false;
+pidfile = "/tmp/prosody.pid";
+
 -- Prosody will always look in its source directory for modules, but
 -- this option allows you to specify additional locations where Prosody
 -- will look for modules first. For community modules, see https://modules.prosody.im/
@@ -159,12 +162,9 @@ archive_expires_after = "1w" -- Remove archived messages after 1 week
 -- archiving options, see https://prosody.im/doc/modules/mod_mam
 
 -- Logging configuration
--- For advanced logging see https://prosody.im/doc/logging
+-- For advanced logging see http://prosody.im/doc/logging
 log = {
-	info = "prosody.log"; -- Change 'info' to 'debug' for verbose logging
-	error = "prosody.err";
-	-- "*syslog"; -- Uncomment this for logging to syslog
-	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
+	debug = "*console";
 }
 
 -- Uncomment to enable statistics
