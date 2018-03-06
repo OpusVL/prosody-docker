@@ -33,7 +33,7 @@ pidfile = "/tmp/prosody.pid";
 -- Prosody will always look in its source directory for modules, but
 -- this option allows you to specify additional locations where Prosody
 -- will look for modules first. For community modules, see https://modules.prosody.im/
---plugin_paths = {}
+plugin_paths = { "/opt/prosody-modules-enabled" }
 
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
