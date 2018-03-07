@@ -66,8 +66,8 @@ RUN set -ex; \
 		&& chown -R prosody:prosody /etc/prosody/* /opt/prosody-modules-* \
 		&& chmod -R 760 /etc/prosody/* /opt/prosody-modules-*
 
-COPY docker-entrypoint.sh /usr/local/bin/
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY entrypoint.pl /usr/local/bin/
+ENTRYPOINT ["entrypoint.pl"]
 
 USER prosody:prosody
 CMD ["prosodyctl", "start"]
