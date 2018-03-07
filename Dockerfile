@@ -59,10 +59,12 @@ RUN set -ex; \
 ADD configuration/prosody.cfg.lua /etc/prosody/prosody.cfg.lua
 ADD configuration/conf.d/ /etc/prosody/conf.d/
 
-RUN useradd -ms /bin/bash prosody \
-    && mkdir /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ \
-    && chown -R prosody:prosody /etc/prosody/* \
-    && chmod -R 760 /etc/prosody/*
+RUN set -ex; \
+	\
+	useradd -ms /bin/bash prosody \
+		&& mkdir /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ \
+		&& chown -R prosody:prosody /etc/prosody/* \
+		&& chmod -R 760 /etc/prosody/*
 
 COPY docker-entrypoint.sh /usr/local/bin/
 ENTRYPOINT ["docker-entrypoint.sh"]
