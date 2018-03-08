@@ -2,7 +2,7 @@
 -- Settings in this section apply to the whole server and are the default settings
 -- for any virtual hosts
 
-use_libevent = ${PROSODY_LIBEVENT:-false}
+use_libevent = ${PROSODY_USE_LIBEVENT:-false}
 
 daemonize = false
 
@@ -15,19 +15,19 @@ Include "conf.d/logging.cfg.lua"
 
 -- Disable account creation by default, for security
 -- For more information see https://prosody.im/doc/creating_accounts
-allow_registration = false
+
+allow_registration = ${PROSODY_ALLOW_REGISTRATION:-false}
 
 -- Force clients to use encrypted connections? This option will
 -- prevent clients from authenticating unless they are using encryption.
 
-c2s_require_encryption = true
+c2s_require_encryption = ${PROSODY_C2S_REQUIRE_ENCRYPTION:-true}
 
 -- Force servers to use encrypted connections? This option will
 -- prevent servers from authenticating unless they are using encryption.
 -- Note that this is different from authentication
 
-s2s_require_encryption = true
-
+s2s_require_encryption = ${PROSODY_S2S_REQUIRE_ENCRYPTION:-true}
 
 -- Force certificate authentication for server-to-server connections?
 -- This provides ideal security, but requires servers you communicate
@@ -35,7 +35,7 @@ s2s_require_encryption = true
 -- NOTE: Your version of LuaSec must support certificate verification!
 -- For more information see https://prosody.im/doc/s2s#security
 
-s2s_secure_auth = false
+s2s_secure_auth = ${PROSODY_S2S_SECURE_AUTH:-false}
 
 -- Some servers have invalid or self-signed certificates. You can list
 -- remote domains here that will not be required to authenticate using
@@ -69,7 +69,6 @@ authentication = "internal_hashed"
 --sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
 --sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 --sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
-
 
 -- Archiving configuration
 -- If mod_mam is enabled, Prosody will store a copy of every message. This
