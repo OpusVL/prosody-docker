@@ -5,7 +5,7 @@ use v5.24;
 
 my @configs = (
     "/etc/prosody/prosody.cfg.lua",
-#    "/etc/prosody/conf.d/modules.cfg.lua",
+    "/etc/prosody/conf.d/modules.cfg.lua",
     "/etc/prosody/conf.d/logging.cfg.lua",
 );
 
@@ -17,7 +17,7 @@ for my $conf (@configs) {
         push @outlines,
         s#\$\{
             ([^}]+?)
-            (?::-([^}]+?))
+            (?::-([^}]*?))
         \}
         #$ENV{$1} // $2#xger
         ;

@@ -9,7 +9,6 @@ plugin_paths = { "/opt/prosody-modules-enabled" }
 -- Documentation for bundled modules can be found at: https://prosody.im/doc/modules
 
 modules_enabled = {
-
 	-- Generally required
 		"roster"; -- Allow users to have a roster. Recommended ;)
 		"saslauth"; -- Authentication for clients and servers. Recommended if you want to log in.
@@ -51,6 +50,10 @@ modules_enabled = {
 		--"motd"; -- Send a message to users when they log in
 		--"legacyauth"; -- Legacy authentication. Only used by some old clients and bots.
 		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
+
+	-- Environment loaded global core and community modules
+		${PROSODY_CORE_MODULES:-}
+		${PROSODY_COMM_MODULES:-}
 }
 
 -- These modules are auto-loaded, but should you want
