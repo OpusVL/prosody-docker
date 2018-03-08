@@ -52,8 +52,7 @@ modules_enabled = {
 		--"proxy65"; -- Enables a file transfer proxy service which clients behind NAT can use
 
 	-- Environment loaded global core and community modules
-		${PROSODY_CORE_MODULES:-}
-		${PROSODY_COMM_MODULES:-}
+		${PROSODY_ENABLED_MODULES:-}
 }
 
 -- These modules are auto-loaded, but should you want

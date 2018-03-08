@@ -78,8 +78,7 @@ system "ln", "-s",
     "/opt/prosody-modules-enabled/mod_$_"
     for keys %COMM;
 
-$ENV{PROSODY_CORE_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %CORE;
-$ENV{PROSODY_COMM_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %COMM;
+$ENV{PROSODY_ENABLED_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %ENABLE;
 
 # Go through all of the config files and interpolate environment variables into
 # them. ${ENV_VAR_NAME:-default}
