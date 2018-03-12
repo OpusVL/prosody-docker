@@ -12,20 +12,6 @@ Default value: `info`
 
 Determines which log level to use for the console output, possible values are `info`, `warn`, `error` and `debug`.
 
-### `PROSODY_CORE_MODULES`
-Default value: `none`  
-Example: `-e PROSODY_CORE_MODULES='mam admin_telnet'`
-
-A space-separated list of core module names to load.  See
-[`configuration/conf.d/modules.cfg.lua`](https://github.com/OpusVL/prosody-docker/blob/master/configuration/conf.d/modules.cfg.lua) for a list and whether they're enabled by
-default or not.
-
-### `PROSODY_COMM_MODULES`
-Default value: `none`  
-Example: `-e PROSODY_COMM_MODULES='lastlog firewall'`
-
-A space-separated list of community modules to load. See https://hg.prosody.im/prosody-modules/ for a complete list.
-
 ### `PROSODY_MODULES_DISABLED`
 Default value: `none`  
 Example: `-e PROSODY_MODULES_DISABLED='ping carbons'`
