@@ -18,6 +18,8 @@ RUN set -ex; \
 		lua-event \
 		lua-zlib \
 		lua-dbi-postgresql \
+		lua-dbi-mysql \
+		lua-dbi-sqlite3 \
 		lua-bitop \
 		lua-socket \
 		lua-expat \
