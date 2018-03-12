@@ -66,7 +66,7 @@ The value to be substituted for use as the bootstrapped VirtualHost.
 Default value: `none`
 Example: `-e PROSODY_BOOTSTRAP_ADMIN_XIDS='example@localhost.dev user2@localhost.dev'`
 
-A space-separated list of administrators for the bootstrapped VirtualHost.
+A space-separated list of administrators for the bootstrapped VirtualHost. These users are not created automatically however, you must manually do that once the server is online.
 
 ### `PROSODY_BOOTSTRAP_AUTHENTICATION`
 Default value: `internal_hashed`
