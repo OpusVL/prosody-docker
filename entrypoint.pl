@@ -84,7 +84,7 @@ $ENV{PROSODY_ENABLED_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %ENABLE;
 
 # Set up the bootstrap vars before we fiddle with the configs
 if ($ENV{PROSODY_BOOTSTRAP}) {
-    my @admin_xids = split ' ', $ENV{PROSODY_ADMIN_XIDS};
+    my @admin_xids = split ' ', $ENV{PROSODY_BOOTSTRAP_ADMIN_XIDS};
     $ENV{PROSODY_BOOTSTRAP_ADMIN_XIDS_QUOTED} = join ',', map { qq/"$_"/ } @admin_xids;
 
     if ($ENV{PROSODY_BOOTSTRAP_STORAGE} eq 'sql') {
