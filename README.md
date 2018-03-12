@@ -47,3 +47,28 @@ Default value: `true`
 
 ### `PROSODY_S2S_SECURE_AUTH`
 Default value: `false`
+
+## Bootstrap Mode
+
+This Docker image has the option to bootstrap a very basic VirtualHost based on a few environment variables.
+
+### `PROSODY_BOOTSTRAP`
+Default value: `0`
+
+Enables the bootstrap mode if set to `1`.
+
+### `PROSODY_BOOTSTRAP_VIRTUALHOST`
+Default value: `none`
+
+The value to be substituted for use as the bootstrapped VirtualHost.
+
+### `PROSODY_BOOTSTRAP_ADMIN_XIDS`
+Default value: `none`
+Example: `-e PROSODY_BOOTSTRAP_ADMIN_XIDS='example@localhost.dev user2@localhost.dev'`
+
+A space-separated list of administrators for the bootstrapped VirtualHost.
+
+### `PROSODY_BOOTSTRAP_AUTHENTICATION`
+Default value: `internal_hashed`
+
+The authentication mode for the bootstrapped VirtualHost, defaults to hashed password.
