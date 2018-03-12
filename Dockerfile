@@ -8,6 +8,7 @@ RUN set -ex; \
 	apt-get update -qq; \
 	apt-get install -y -qq --no-install-suggests --no-install-recommends \
 		ca-certificates \
+	        mercurial \
 		curl \
 		lua5.1 \
 		liblua5.1 \
@@ -22,14 +23,21 @@ RUN set -ex; \
 		lua-expat \
 		lua-filesystem
 
-ENV PROSODY_VERSION 0.10.0
-ENV PROSODY_SHA1 57c1c5a665e6453bdde06727ef398cd69accd9d7
+ARG prosody_version=0.10.0
+ARG prosody_sha1=57c1c5a665e6453bdde06727ef398cd69accd9d7
 
-RUN set -ex; \
-	curl -o prosody.tar.gz -fSL "https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz"; \
-	echo "$PROSODY_SHA1 *prosody.tar.gz" | sha1sum -c -; \
-	tar -xzf prosody.tar.gz -C /usr/src/; \
-	rm prosody.tar.gz
+ENV PROSODY_VERSION $prosody_version
+ENV PROSODY_SHA1 $prosody_sha1
+
+RUN if [ "$PROSODY_VERSION" = "trunk" ]; then \
+        hg clone https://hg.prosody.im/trunk/ /usr/src/prosody-$PROSODY_VERSION; \
+    else \
+        set -ex; \
+        curl -o prosody.tar.gz -fSL "https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz"; \
+        echo "$PROSODY_SHA1 *prosody.tar.gz" | sha1sum -c -; \
+        tar -xzf prosody.tar.gz -C /usr/src/; \
+        rm prosody.tar.gz; \
+    fi
 
 WORKDIR /usr/src/prosody-$PROSODY_VERSION
 
@@ -39,10 +47,10 @@ RUN set -ex; \
 	\
 	apt-get install -y -qq --no-install-suggests --no-install-recommends \
 		build-essential \
+		bsdmainutils \
 		liblua5.1-dev \
 		libidn11-dev \
 		libssl-dev \
-		mercurial \
 	; \
 	\
 	${PWD}/configure --ostype=debian --prefix=/usr --sysconfdir=/etc/prosody --datadir=/var/lib/prosody; \
