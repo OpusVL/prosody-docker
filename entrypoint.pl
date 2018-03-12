@@ -23,16 +23,29 @@ sub uncomment (_) {
     s/^(\s*)--/$1/;
 }
 
-my %COMM;
-@COMM{split ' ', $ENV{PROSODY_COMM_MODULES} // ''} = ();
+# PROSODY_MODULES_ENABLED globally activates modules (and makes them available)
+my %ENABLED;
+@ENABLED{split ' ', $ENV{PROSODY_MODULES_ENABLED} // ''} = ();
 
-my %CORE;
-@CORE{split ' ', $ENV{PROSODY_CORE_MODULES} // ''} = ();
+# PROSODY_MODULES_AVAILABLE symlinks community modules into plugin paths
+my %AVAILABLE;
+@AVAILABLE{split ' ', $ENV{PROSODY_MODULES_AVAILABLE} // ''} = ();
 
+my %CORE = do {
+    my @core = glob '/usr/lib/prosody/modules/mod_*.lua';
+    push @core, '/usr/lib/prosody/modules/*/mod_*.lua';
+
+    map { (/mod_(.+)\.lua/)[0] => undef } @core;
+};
+
+delete @AVAILABLE{keys %CORE};
+
+# PROSODY_MODULES_DISABLED disables any (global) auto-enabled modules
 my %DISABLE;
 @DISABLE{split ' ', $ENV{PROSODY_MODULES_DISABLED} // ''} = ();
 
-my %ENABLE = (%COMM, %CORE);
+# PROSODY_MODULES_ENABLED overrides PROSODY_MODULES_DISABLED
+delete @DISABLE{keys %ENABLED};
 
 {
     # In-place edit the module conf based on env vars.
@@ -55,7 +68,7 @@ my %ENABLE = (%COMM, %CORE);
                 comment_out;
             }
         }
-        elsif(exists $ENABLE{$modname}) {
+        elsif(exists $ENABLED{$modname}) {
             if ($in_auto_disabled_block) {
                 comment_out;
             }
@@ -63,8 +76,8 @@ my %ENABLE = (%COMM, %CORE);
                 uncomment;
             }
 
-            delete $COMM{$modname};
-            delete $CORE{$modname};
+            # We put anything that's left into the config using the template var
+            delete $ENABLED{$modname};
         }
     }
     continue {
@@ -72,15 +85,23 @@ my %ENABLE = (%COMM, %CORE);
     }
 }
 
-# Link the requested community modules into the enabled directory. This is
-# because some community modules clash with core modules so we have to be
-# selective.
+# Do this before deleting keys from %ENABLED
+$ENV{PROSODY_ENABLED_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %ENABLED;
+
+# Link modules requested to be available into the enabled dir so all prosodies
+# can see them. Only the ones in the main config will be enabled globally
+# Don't try to symlink core modules
+delete @ENABLED{keys %CORE};
 system "ln", "-s", 
     "/opt/prosody-modules-available/mod_$_",
     "/opt/prosody-modules-enabled/mod_$_"
-    for keys %COMM;
+    for keys %AVAILABLE, keys %ENABLED
+;
 
-$ENV{PROSODY_ENABLED_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %ENABLE;
+system "ln", "-s", 
+    "/opt/prosody-modules-available/.hg",
+    "/opt/prosody-modules-enabled/.hg"
+;
 
 # Set up the bootstrap vars before we fiddle with the configs
 if ($ENV{PROSODY_BOOTSTRAP}) {
