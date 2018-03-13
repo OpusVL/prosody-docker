@@ -34,6 +34,18 @@ Default value: `true`
 ### `PROSODY_S2S_SECURE_AUTH`
 Default value: `false`
 
+### `PROSODY_S2S_INSECURE_DOMAINS`
+Default value: `none`
+
+A space-separated list of that will not be required to authenticate
+using certificates.
+
+### `PROSODY_S2S_SECURE_DOMAINS`
+Default value: `none`
+
+A space-separated list of domains which still require valid certificates
+even if you leave `s2s_secure_auth` disabled.
+
 ## Bootstrap Mode
 
 This Docker image has the option to bootstrap a very basic VirtualHost based on a few environment variables.
