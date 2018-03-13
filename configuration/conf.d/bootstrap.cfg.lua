@@ -1,5 +1,3 @@
 VirtualHost "${PROSODY_BOOTSTRAP_VIRTUALHOST}"
 
 admins = { ${PROSODY_BOOTSTRAP_ADMIN_XIDS_QUOTED} }
-
-authentication = "${PROSODY_BOOTSTRAP_AUTHENTICATION:-internal_hashed}"

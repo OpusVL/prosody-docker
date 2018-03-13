@@ -46,12 +46,12 @@ s2s_secure_auth = ${PROSODY_S2S_SECURE_AUTH:-false}
 -- certificates. They will be authenticated using DNS instead, even
 -- when s2s_secure_auth is enabled.
 
---s2s_insecure_domains = { "insecure.example" }
+s2s_insecure_domains = { ${PROSODY_S2S_INSECURE_DOMAINS} }
 
 -- Even if you leave s2s_secure_auth disabled, you can still require valid
 -- certificates for some domains by specifying a list here.
 
---s2s_secure_domains = { "jabber.org" }
+s2s_secure_domains = { ${PROSODY_S2S_SECURE_DOMAINS} }
 
 -- Select the authentication backend to use. The 'internal' providers
 -- use Prosody's configured data storage to store the authentication data.
@@ -60,19 +60,12 @@ s2s_secure_auth = ${PROSODY_S2S_SECURE_AUTH:-false}
 -- server please see https://prosody.im/doc/modules/mod_auth_internal_hashed
 -- for information about using the hashed backend.
 
-authentication = "internal_hashed"
+authentication = "${PROSODY_AUTHENTICATION:-internal_hashed}"
 
 -- Select the storage backend to use. By default Prosody uses flat files
 -- in its configured data directory, but it also supports more backends
 -- through modules. An "sql" backend is included by default, but requires
 -- additional dependencies. See https://prosody.im/doc/storage for more info.
-
---storage = "sql" -- Default is "internal"
-
--- For the "sql" backend, you can uncomment *one* of the below to configure:
---sql = { driver = "SQLite3", database = "prosody.sqlite" } -- Default. 'database' is the filename.
---sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
---sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 
 storage = "${PROSODY_STORAGE:-internal}"
 

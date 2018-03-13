@@ -23,6 +23,12 @@ sub uncomment (_) {
     s/^(\s*)--/$1/;
 }
 
+sub spaces_to_quoted {
+    my $t = "\t" x $::INDENT if $::INDENT;
+
+    join "\n$t", map { qq/"$_";/ } map { split ' ' } @_;
+}
+
 # PROSODY_MODULES_ENABLED globally activates modules (and makes them available)
 my %ENABLED;
 @ENABLED{split ' ', $ENV{PROSODY_MODULES_ENABLED} // ''} = ();
@@ -86,7 +92,7 @@ delete @DISABLE{keys %ENABLED};
 }
 
 # Do this before deleting keys from %ENABLED
-$ENV{PROSODY_ENABLED_MODULES} = join "\n\t\t", map { qq/"$_";/ } keys %ENABLED;
+$ENV{PROSODY_ENABLED_MODULES} = do { local $::INDENT = 2; spaces_to_quoted(keys %ENABLED) };
 
 # Link modules requested to be available into the enabled dir so all prosodies
 # can see them. Only the ones in the main config will be enabled globally
@@ -129,6 +135,11 @@ if ($ENV{PROSODY_BOOTSTRAP}) {
 
     }
 }
+
+$ENV{$_} = spaces_to_quoted($ENV{$_}) for qw/
+    PROSODY_S2S_SECURE_DOMAINS
+    PROSODY_S2S_INSECURE_DOMAINS
+/;
 
 # Go through all of the config files and interpolate environment variables into
 # them. ${ENV_VAR_NAME:-default}
