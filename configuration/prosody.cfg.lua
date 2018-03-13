@@ -74,6 +74,12 @@ authentication = "internal_hashed"
 --sql = { driver = "MySQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 --sql = { driver = "PostgreSQL", database = "prosody", username = "prosody", password = "secret", host = "localhost" }
 
+storage = "${PROSODY_STORAGE:-internal}"
+
+if storage == "sql" then
+  sql = ${PROSODY_SQL_CONNECTION:-""}
+end
+
 -- Archiving configuration
 -- If mod_mam is enabled, Prosody will store a copy of every message. This
 -- is used to synchronize conversations between multiple clients, even if

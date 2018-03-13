@@ -103,29 +103,30 @@ system "ln", "-s",
     "/opt/prosody-modules-enabled/.hg"
 ;
 
+if ($ENV{PROSODY_STORAGE} eq 'sql') {
+    my $sqlconf = {
+        driver      => $ENV{PROSODY_DB_DRIVER} // 'PostgreSQL',
+        database    => $ENV{PROSODY_DB_NAME} // 'prosody',
+        host        => $ENV{PROSODY_DB_HOST} // 'postgresql',
+        port        => $ENV{PROSODY_DB_PORT} // 5432,
+        username    => $ENV{PROSODY_DB_USERNAME} // 'prosody',
+        password    => $ENV{PROSODY_DB_PASSWORD} // die "Must specify database password",
+    };
+
+    my $maybe_quote = sub {
+        return qq/"$_[0]"/ unless looks_like_number $_[0];
+        return $_[0];
+    };
+
+    my $sqlstr = "{ " . (join ", ", map { join ' = ', $_, $maybe_quote->($sqlconf->{$_}) } keys %$sqlconf) . " }";
+
+    $ENV{PROSODY_SQL_CONNECTION} = $sqlstr;
+
 # Set up the bootstrap vars before we fiddle with the configs
 if ($ENV{PROSODY_BOOTSTRAP}) {
     my @admin_xids = split ' ', $ENV{PROSODY_BOOTSTRAP_ADMIN_XIDS};
     $ENV{PROSODY_BOOTSTRAP_ADMIN_XIDS_QUOTED} = join ',', map { qq/"$_"/ } @admin_xids;
 
-    if ($ENV{PROSODY_BOOTSTRAP_STORAGE} eq 'sql') {
-        my $sqlconf = {
-            driver      => $ENV{PROSODY_BOOTSTRAP_DB_DRIVER} // 'PostgreSQL',
-            database    => $ENV{PROSODY_BOOTSTRAP_DB_NAME} // 'prosody',
-            host        => $ENV{PROSODY_BOOTSTRAP_DB_HOST} // 'postgresql',
-            port        => $ENV{PROSODY_BOOTSTRAP_DB_PORT} // 5432,
-            username    => $ENV{PROSODY_BOOTSTRAP_DB_USERNAME} // 'prosody',
-            password    => $ENV{PROSODY_BOOTSTRAP_DB_PASSWORD} // die "Must specify database password",
-        };
-
-        my $maybe_quote = sub {
-            return qq/"$_[0]"/ unless looks_like_number $_[0];
-            return $_[0];
-        };
-
-        my $sqlstr = "{ " . (join ", ", map { join ' = ', $_, $maybe_quote->($sqlconf->{$_}) } keys %$sqlconf) . " }";
-
-        $ENV{PROSODY_BOOTSTRAP_SQL_CONNECTION} = $sqlstr;
     }
 }
 
