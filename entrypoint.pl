@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use v5.22;
 use Scalar::Util qw/looks_like_number/;
+use List::Util qw/any/;
 
 my $confdir = $ENV{PROSODY_CONFIGDIR} // '/etc/prosody';
 
@@ -24,9 +25,9 @@ sub uncomment (_) {
 }
 
 sub spaces_to_quoted {
-    my $t = "\t" x $::INDENT if $::INDENT;
+    my $t = "\t" x ($::INDENT // 0);
 
-    join "\n$t", map { qq/"$_";/ } map { split ' ' } @_;
+    join "\n$t", map { qq/"$_";/ } map { split ' ' } grep defined, @_;
 }
 
 # PROSODY_MODULES_ENABLED globally activates modules (and makes them available)
@@ -109,7 +110,24 @@ system "ln", "-s",
     "/opt/prosody-modules-enabled/.hg"
 ;
 
-if ($ENV{PROSODY_STORAGE} eq 'sql') {
+my %STORAGE = map {
+        /^PROSODY_STORAGE_(.+)/ ? (lc $1 => $ENV{$_}) : ()
+    }
+    keys %ENV
+;
+
+$ENV{PROSODY_STORAGE_KVP} =
+    join "\n",
+    map {
+        qq{$_ = "$STORAGE{$_}";}
+    }
+    keys %STORAGE
+;
+
+if (
+    any {; $_ eq 'sql' } 
+    values %STORAGE, $ENV{PROSODY_DEFAULT_STORAGE}
+) {
     my $sqlconf = {
         driver      => $ENV{PROSODY_DB_DRIVER} // 'PostgreSQL',
         database    => $ENV{PROSODY_DB_NAME} // 'prosody',

@@ -67,11 +67,11 @@ authentication = "${PROSODY_AUTHENTICATION:-internal_hashed}"
 -- through modules. An "sql" backend is included by default, but requires
 -- additional dependencies. See https://prosody.im/doc/storage for more info.
 
-storage = "${PROSODY_STORAGE:-internal}"
-
-if storage == "sql" then
-  sql = ${PROSODY_SQL_CONNECTION:-""}
-end
+default_storage = "${PROSODY_DEFAULT_STORAGE:-internal}"
+storage = {
+    ${PROSODY_STORAGE_KVP}
+}
+sql = ${PROSODY_SQL_CONNECTION:-""}
 
 -- Archiving configuration
 -- If mod_mam is enabled, Prosody will store a copy of every message. This
