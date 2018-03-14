@@ -65,6 +65,28 @@ Default value: `none`
 A space-separated list of domains which still require valid certificates
 even if you leave `s2s_secure_auth` disabled.
 
+## Database Storage Mode
+
+If either `PROSODY_DEFAULT_STORAGE` or any of the `PROSODY_STORAGE_<store>` variables are set to `sql`, the [entrypoint script](https://github.com/OpusVL/prosody-docker/blob/master/entrypoint.pl#L131) will automatically detect this and make available the configuration options to allow for database connections as environment variables. The base image contains all three drivers needed to connect to PostgreSQL, MySQL or SQLite3 databases.
+
+### `PROSODY_DB_DRIVER`
+Default value: `PostgreSQL`
+
+### `PROSODY_DB_NAME`
+Default value: `prosody`
+
+### `PROSODY_DB_HOST`
+Default value: `postgresql`
+
+### `PROSODY_DB_PORT`
+Default value: `5432`
+
+### `PROSODY_DB_USERNAME`
+Default value: `prosody`
+
+### `PROSODY_DB_PASSWORD`
+Default value: `none` (will `die` if not set)
+
 ## Bootstrap Mode
 
 This Docker image has the option to bootstrap a very basic VirtualHost based on a few environment variables.
