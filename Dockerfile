@@ -71,7 +71,7 @@ ADD configuration/conf.d/ /etc/prosody/conf.d/
 
 RUN set -ex; \
 	\
-	useradd -ms /bin/bash prosody \
+	useradd -rs /bin/false prosody \
 		&& mkdir /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ \
 		&& chown -R prosody:prosody /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-* \
 		&& chmod -R 760 /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
