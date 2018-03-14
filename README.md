@@ -38,6 +38,14 @@ automatically by Prosody.
 Default value: `internal`  
 Example: `-e PROSODY_DEFAULT_STORAGE='sql'`
 
+### `PROSODY_STORAGE_<store>`
+Default value: `none`  
+Example: `-e PROSODY_STORAGE_ACCOUNTS='sql' -e PROSODY_STORAGE_ARCHIVE='sql'`
+
+A dynamic variable used to construct the `storage` array within the main
+Prosody configuration file. Allows for extremely granular control of your Prosody
+data stores.
+
 ### `PROSODY_USE_LIBEVENT`
 Default value: `false`
 
