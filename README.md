@@ -12,12 +12,31 @@ Default value: `info`
 
 Determines which log level to use for the console output, possible values are `info`, `warn`, `error` and `debug`.
 
+### `PROSODY_MODULES_AVAILABLE`
+Default value: `none`  
+Example: `-e PROSODY_MODULES_AVAILABLE='lastlog firewall swedishchef'`
+
+A space-separated list of modules to symlink from `/opt/prosody-modules-available/`
+to `/opt/prosody-modules-enabled/`, does not enable them by default however. You then
+need to specify within `PROSODY_MODULES_ENABLED` if you'd like them loaded globally.
+
+### `PROSODY_MODULES_ENABLED`
+Default value: `none`  
+Example: `-e PROSODY_MODULES_ENABLED='websocket server_contact_info'`
+
+A space-separated list of modules to enable within the global modules_enabled configurartion
+block. This variable will also attempt to deduplicate any modules passed through.
+
 ### `PROSODY_MODULES_DISABLED`
 Default value: `none`  
-Example: `-e PROSODY_MODULES_DISABLED='ping carbons'`
+Example: `-e PROSODY_MODULES_DISABLED='s2s carbons'`
 
 A space-separated list of modules to disable, if they would be loaded
 automatically by Prosody.
+
+### `PROSODY_DEFAULT_STORAGE`
+Default value: `internal`  
+Example: `-e PROSODY_DEFAULT_STORAGE='sql'`
 
 ### `PROSODY_USE_LIBEVENT`
 Default value: `false`
