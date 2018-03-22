@@ -1,5 +1,7 @@
 FROM debian:stretch-slim
-MAINTAINER Kane Valentine <kane.valentine@opusvl.com>
+
+LABEL vendor="The Prosody Team"
+LABEL maintainer="Kane Valentine <kane@cute.im>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
