@@ -27,8 +27,8 @@ RUN set -ex; \
 		lua-expat \
 		lua-filesystem
 
-ARG prosody_version=0.10.0
-ARG prosody_sha1=57c1c5a665e6453bdde06727ef398cd69accd9d7
+ARG prosody_version=0.10.2
+ARG prosody_sha1=1d51e542475c3f3e712eace29537b042c941d6ab
 
 ENV PROSODY_VERSION $prosody_version
 ENV PROSODY_SHA1 $prosody_sha1
