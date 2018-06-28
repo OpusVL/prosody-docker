@@ -180,4 +180,5 @@ for my $conf (@configs) {
     print $outconffh $_ for @outlines;
 }
 
+sleep 5;
 exec @ARGV;
