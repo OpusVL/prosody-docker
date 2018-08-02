@@ -92,7 +92,7 @@ archive_expires_after = "1w" -- Remove archived messages after 1 week
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "localhost"
+VirtualHost "${PROSODY_DEFAULT_VIRTUALHOST:-localhost}"
 
 Include "vhost.d/*.cfg.lua"
 
