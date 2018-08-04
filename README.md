@@ -97,7 +97,7 @@ Default value: `none` (will `die` if not set)
 
 ## Bootstrap Mode
 
-This Docker image has the option to bootstrap a very basic VirtualHost based on a few environment variables.
+This Docker image has the option to bootstrap a very basic VirtualHost based on a few environment variables. The bootstrap host will inherit any settings from the global configuration. If the `PROSODY_S2S_REQUIRE_ENCRYPTION` setting is set to `true` then you'll need to bind mount TLS certificates into the `/etc/prosody/certs` directory.
 
 ### `PROSODY_BOOTSTRAP`
 Default value: `0`
