@@ -6,8 +6,6 @@ use_libevent = ${PROSODY_USE_LIBEVENT:-false}
 
 daemonize = false
 
-pidfile = "/tmp/prosody.pid"
-
 certificates = "certs"
 
 Include "conf.d/modules.cfg.lua"
