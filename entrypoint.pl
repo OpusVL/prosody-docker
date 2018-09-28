@@ -125,7 +125,7 @@ $ENV{PROSODY_STORAGE_KVP} =
 ;
 
 if (
-    any {; $_ eq 'sql' } 
+    any {; defined $_ && $_ eq 'sql' }
     values %STORAGE, $ENV{PROSODY_DEFAULT_STORAGE}
 ) {
     my $sqlconf = {
