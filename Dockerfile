@@ -82,4 +82,4 @@ COPY entrypoint.pl /usr/local/bin/
 ENTRYPOINT ["entrypoint.pl"]
 
 USER prosody:prosody
-CMD ["prosodyctl", "start"]
+CMD ["/usr/bin/prosody"]
