@@ -60,7 +60,7 @@ RUN set -ex; \
 	\
 	savedAptMark="$(apt-mark showmanual)"; \
 	\
-	apt-get install -y -qq --no-install-suggests --no-install-recommends \
+	apt-get install -qq --no-install-suggests --no-install-recommends \
 		build-essential \
 		bsdmainutils \
 		liblua5.1-dev \
@@ -76,7 +76,7 @@ RUN set -ex; \
 	\
 	apt-mark auto '.*' > /dev/null; \
 	apt-mark manual $savedAptMark; \
-	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+	apt-get purge -qq --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
 	rm -rf /var/lib/apt/lists/*
 
 ADD configuration/prosody.cfg.lua /etc/prosody/prosody.cfg.lua
