@@ -9,12 +9,20 @@ ARG lua_version=5.2
 ENV LUA_VERSION $lua_version
 
 RUN set -ex; \
+        \
+	apt-get update -qq; \
+	apt-get install -qq --no-install-suggests --no-install-recommends \
+		ca-certificates \
+		curl \
+		gnupg; \
+	echo deb http://packages.prosody.im/debian stretch main \
+	| tee -a /etc/apt/sources.list; \
+	curl -fsSL https://prosody.im/files/prosody-debian-packages.key \
+	| apt-key add -; \
 	\
 	apt-get update -qq; \
-	apt-get install -y -qq --no-install-suggests --no-install-recommends \
-		ca-certificates \
-	        mercurial \
-		curl \
+	apt-get install -qq --no-install-suggests --no-install-recommends \
+		mercurial \
 		lua$LUA_VERSION \
 		liblua$LUA_VERSION \
 		libssl1.0.2 \
