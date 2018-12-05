@@ -5,6 +5,9 @@ LABEL maintainer="Kane Valentine <kane@cute.im>"
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ARG lua_version=5.2
+ENV LUA_VERSION $lua_version
+
 RUN set -ex; \
 	\
 	apt-get update -qq; \
@@ -12,8 +15,8 @@ RUN set -ex; \
 		ca-certificates \
 	        mercurial \
 		curl \
-		lua5.1 \
-		liblua5.1 \
+		lua$LUA_VERSION \
+		liblua$LUA_VERSION \
 		libssl1.0.2 \
 		libidn11 \
 		lua-sec \
@@ -57,7 +60,7 @@ RUN set -ex; \
 		libssl-dev \
 	; \
 	\
-	${PWD}/configure --ostype=debian --prefix=/usr --sysconfdir=/etc/prosody --datadir=/var/lib/prosody; \
+	${PWD}/configure --lua-version=$LUA_VERSION --prefix=/usr --sysconfdir=/etc/prosody --datadir=/var/lib/prosody; \
 	make && make install; \
 	\
 	hg clone https://hg.prosody.im/prosody-modules/ /opt/prosody-modules-available/ \
