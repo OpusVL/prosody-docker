@@ -9,7 +9,7 @@ ARG lua_version=5.2
 ENV LUA_VERSION $lua_version
 
 RUN set -ex; \
-        \
+	\
 	apt-get update -qq; \
 	apt-get install -qq --no-install-suggests --no-install-recommends \
 		ca-certificates \
@@ -44,15 +44,15 @@ ARG prosody_sha1=dacce98fda317f5ba3c05842e2d97018d050b435
 ENV PROSODY_VERSION $prosody_version
 ENV PROSODY_SHA1 $prosody_sha1
 
-RUN if [ "$PROSODY_VERSION" = "trunk" ]; then \
-        hg clone https://hg.prosody.im/trunk/ /usr/src/prosody-$PROSODY_VERSION; \
-    else \
-        set -ex; \
-        curl -o prosody.tar.gz -fSL "https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz"; \
-        echo "$PROSODY_SHA1 *prosody.tar.gz" | sha1sum -c -; \
-        tar -xzf prosody.tar.gz -C /usr/src/; \
-        rm prosody.tar.gz; \
-    fi
+RUN set -ex; \
+	if [ "$PROSODY_VERSION" = "trunk" ]; then \
+		hg clone https://hg.prosody.im/trunk/ /usr/src/prosody-$PROSODY_VERSION; \
+	else \
+		curl -o prosody.tar.gz -fSL "https://prosody.im/downloads/source/prosody-${PROSODY_VERSION}.tar.gz"; \
+		echo "$PROSODY_SHA1 *prosody.tar.gz" | sha1sum -c -; \
+		tar -xzf prosody.tar.gz -C /usr/src/; \
+		rm prosody.tar.gz; \
+	fi
 
 WORKDIR /usr/src/prosody-$PROSODY_VERSION
 
