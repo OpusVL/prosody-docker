@@ -180,5 +180,14 @@ for my $conf (@configs) {
     print $outconffh $_ for @outlines;
 }
 
+if ($ENV{PROSODY_IMPORT_CERTIFICATE_HOSTNAMES} and $ENV{PROSODY_IMPORT_CERTIFICATE_DIRECTORIES}) {
+    my %certs;
+    my @hostnames = split / /, $ENV{PROSODY_IMPORT_CERTIFICATE_HOSTNAMES};
+    my @dirs = split / /, $ENV{PROSODY_IMPORT_CERTIFICATE_DIRECTORIES};
+    die "Hostnames and directories are not the same length!" unless @hostnames == @dirs;
+    @certs{@hostnames} = @dirs;
+    system qw/prosodyctl --root cert import/, %certs
+}
+
 sleep 10;
 exec @ARGV;
