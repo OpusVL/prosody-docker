@@ -11,6 +11,10 @@ certificates = "certs"
 Include "conf.d/modules.cfg.lua"
 Include "conf.d/logging.cfg.lua"
 
+if ${PROSODY_EXTRA_CFG:-0} == 1 then
+        Include "conf.d/extra.cfg.lua"
+end
+
 if ${PROSODY_BOOTSTRAP:-0} == 1 then
 	Include "conf.d/bootstrap.cfg.lua"
 end
