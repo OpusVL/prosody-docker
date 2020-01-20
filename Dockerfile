@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:10.2
 
 LABEL vendor="The Prosody Team"
 LABEL maintainer="Kane Valentine <kane@cute.im>"
@@ -25,7 +25,7 @@ RUN set -ex; \
 		mercurial \
 		lua$LUA_VERSION \
 		liblua$LUA_VERSION \
-		libssl1.0.2 \
+		libssl1.1 \
 		libidn11 \
 		lua-sec \
 		lua-event \
@@ -38,8 +38,8 @@ RUN set -ex; \
 		lua-expat \
 		lua-filesystem
 
-ARG prosody_version=0.11.2
-ARG prosody_sha1=0508cfc1c3c74a7eb8fdac2ed50435e190930f6a
+ARG prosody_version=0.11.4
+ARG prosody_sha1=59e9e684230c26daf53526e18b0e6e2efb0d63c5
 
 ENV PROSODY_VERSION $prosody_version
 ENV PROSODY_SHA1 $prosody_sha1
