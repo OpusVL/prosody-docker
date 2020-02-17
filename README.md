@@ -95,22 +95,3 @@ Default value: `prosody`
 ### `PROSODY_DB_PASSWORD`
 Default value: `none` (will `die` if not set)
 
-## Bootstrap Mode
-
-This Docker image has the option to bootstrap a very basic VirtualHost based on a few environment variables. The bootstrap host will inherit any settings from the global configuration. If the `PROSODY_S2S_REQUIRE_ENCRYPTION` setting is set to `true` then you'll need to bind mount TLS certificates into the `/etc/prosody/certs` directory.
-
-### `PROSODY_BOOTSTRAP`
-Default value: `0`
-
-Enables the bootstrap mode if set to `1`.
-
-### `PROSODY_BOOTSTRAP_VIRTUALHOST`
-Default value: `none`
-
-The value to be substituted for use as the bootstrapped VirtualHost.
-
-### `PROSODY_BOOTSTRAP_ADMIN_XIDS`
-Default value: `none`  
-Example: `-e PROSODY_BOOTSTRAP_ADMIN_XIDS='example@localhost.dev user2@localhost.dev'`
-
-A space-separated list of administrators for the bootstrapped VirtualHost. These users are not created automatically however, you must manually do that once the server is online.

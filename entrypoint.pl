@@ -11,7 +11,6 @@ my @configs = (
     "$confdir/prosody.cfg.lua",
     my $moduleconf = "$confdir/conf.d/modules.cfg.lua",
     "$confdir/conf.d/logging.cfg.lua",
-    "$confdir/conf.d/bootstrap.cfg.lua",
 );
 
 sub comment_out (_) {
@@ -145,13 +144,6 @@ if (
     my $sqlstr = "{ " . (join ", ", map { join ' = ', $_, $maybe_quote->($sqlconf->{$_}) } keys %$sqlconf) . " }";
 
     $ENV{PROSODY_SQL_CONNECTION} = $sqlstr;
-}
-
-# Set up the bootstrap vars before we fiddle with the configs
-if ($ENV{PROSODY_BOOTSTRAP}) {
-    my @admin_xids = split ' ', $ENV{PROSODY_BOOTSTRAP_ADMIN_XIDS};
-    $ENV{PROSODY_BOOTSTRAP_ADMIN_XIDS_QUOTED} = join ',', map { qq/"$_"/ } @admin_xids;
-
 }
 
 $ENV{$_} = spaces_to_quoted($ENV{$_}) for qw/

@@ -15,10 +15,6 @@ if ${PROSODY_EXTRA_CFG:-0} == 1 then
         Include "conf.d/extra.cfg.lua"
 end
 
-if ${PROSODY_BOOTSTRAP:-0} == 1 then
-	Include "conf.d/bootstrap.cfg.lua"
-end
-
 -- Disable account creation by default, for security
 -- For more information see https://prosody.im/doc/creating_accounts
 
