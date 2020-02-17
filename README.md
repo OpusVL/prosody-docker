@@ -46,8 +46,8 @@ A dynamic variable used to construct the `storage` array within the main
 Prosody configuration file. Allows for extremely granular control of your Prosody
 data stores.
 
-### `PROSODY_USE_LIBEVENT`
-Default value: `false`
+### `PROSODY_NETWORK_BACKEND`
+Default value: `"select"`
 
 ### `PROSODY_ALLOW_REGISTRATION`
 Default value: `false`

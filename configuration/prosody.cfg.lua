@@ -2,7 +2,7 @@
 -- Settings in this section apply to the whole server and are the default settings
 -- for any virtual hosts
 
-use_libevent = ${PROSODY_USE_LIBEVENT:-false}
+network_backend = ${PROSODY_NETWORK_BACKEND:-"select"}
 
 daemonize = false
 
