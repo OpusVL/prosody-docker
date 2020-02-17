@@ -1,8 +1,5 @@
 FROM debian:10.2
 
-LABEL vendor="The Prosody Team"
-LABEL maintainer="Kane Valentine <kane@cute.im>"
-
 ENV DEBIAN_FRONTEND noninteractive
 
 ARG lua_version=5.2
