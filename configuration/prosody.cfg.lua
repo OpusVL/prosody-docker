@@ -90,7 +90,9 @@ archive_expires_after = "${PROSODY_ARCHIVE_EXPIRES_AFTER:-1w}"
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "${PROSODY_DEFAULT_VIRTUALHOST:-localhost}"
+if ${PROSODY_ENABLE_DEFAULT_VIRTUALHOST:-0} == 1 then
+        VirtualHost "${PROSODY_DEFAULT_VIRTUALHOST:-localhost}"
+end
 
 Include "vhost.d/*.cfg.lua"
 
