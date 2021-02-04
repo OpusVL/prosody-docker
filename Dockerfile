@@ -1,4 +1,4 @@
-FROM debian:10.5
+FROM debian:10.6
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -30,6 +30,7 @@ RUN set -ex; \
 		lua-dbi-postgresql \
 		lua-dbi-mysql \
 		lua-dbi-sqlite3 \
+		lua-ldap \
 		lua-bitop \
 		lua-socket \
 		lua-expat \
@@ -61,6 +62,7 @@ RUN set -ex; \
 		build-essential \
 		bsdmainutils \
 		liblua5.1-dev \
+		libldap2-dev \
 		libidn11-dev \
 		libssl-dev \
 	; \
