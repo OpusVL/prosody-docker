@@ -77,7 +77,7 @@ sql = ${PROSODY_SQL_CONNECTION:-""}
 -- they are offline. This setting controls how long Prosody will keep
 -- messages in the archive before removing them.
 
-archive_expires_after = "1w" -- Remove archived messages after 1 week
+archive_expires_after = "${PROSODY_ARCHIVE_EXPIRES_AFTER:-1w}"
 
 -- You can also configure messages to be stored in-memory only. For more
 -- archiving options, see https://prosody.im/doc/modules/mod_mam
