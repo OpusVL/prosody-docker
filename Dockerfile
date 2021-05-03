@@ -1,4 +1,4 @@
-FROM debian:10.6
+FROM debian:10.9
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -36,8 +36,8 @@ RUN set -ex; \
 		lua-expat \
 		lua-filesystem
 
-ARG prosody_version=0.11.7
-ARG prosody_sha1=425e1c7ca37464b31711da8eb4a4c9444a70360f
+ARG prosody_version=0.11.8
+ARG prosody_sha1=f1f030c75abde6e3c7232fedbe8371f5cb913245
 
 ENV PROSODY_VERSION $prosody_version
 ENV PROSODY_SHA1 $prosody_sha1
@@ -85,8 +85,8 @@ RUN set -ex; \
 	\
 	useradd -rs /bin/false prosody \
 		&& mkdir /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ \
-		&& chown -R prosody:prosody /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-* \
-		&& chmod -R 760 /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
+		&& chown -R prosody:prosody /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-* \
+		&& chmod -R 760 /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
 
 COPY entrypoint.pl /usr/local/bin/
 ENTRYPOINT ["entrypoint.pl"]
