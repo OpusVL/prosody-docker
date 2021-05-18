@@ -51,6 +51,17 @@ s2s_insecure_domains = { ${PROSODY_S2S_INSECURE_DOMAINS} }
 
 s2s_secure_domains = { ${PROSODY_S2S_SECURE_DOMAINS} }
 
+-- Enable rate limits for incoming client and server connections
+
+limits = {
+  c2s = {
+    rate = "10kb/s";
+  };
+  s2sin = {
+    rate = "30kb/s";
+  };
+}
+
 -- Select the authentication backend to use. The 'internal' providers
 -- use Prosody's configured data storage to store the authentication data.
 -- To allow Prosody to offer secure authentication mechanisms to clients, the
