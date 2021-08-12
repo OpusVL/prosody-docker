@@ -12,7 +12,7 @@ RUN set -ex; \
 		ca-certificates \
 		curl \
 		gnupg; \
-	echo deb http://packages.prosody.im/debian stretch main \
+	echo deb http://packages.prosody.im/debian buster main \
 	| tee -a /etc/apt/sources.list; \
 	curl -fsSL https://prosody.im/files/prosody-debian-packages.key \
 	| apt-key add -; \
