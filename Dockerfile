@@ -97,4 +97,4 @@ COPY entrypoint.pl /usr/local/bin/
 ENTRYPOINT ["entrypoint.pl"]
 
 USER prosody:prosody
-CMD ["/usr/bin/prosody"]
+CMD ["/usr/bin/prosody", "-F"]

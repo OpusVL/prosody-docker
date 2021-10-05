@@ -4,8 +4,6 @@
 
 network_backend = "${PROSODY_NETWORK_BACKEND:-epoll}"
 
-daemonize = false
-
 certificates = "certs"
 
 Include "conf.d/modules.cfg.lua"
