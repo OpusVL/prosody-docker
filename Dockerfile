@@ -1,4 +1,4 @@
-FROM debian:10.9
+FROM debian:11
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -12,7 +12,7 @@ RUN set -ex; \
 		ca-certificates \
 		curl \
 		gnupg; \
-	echo deb http://packages.prosody.im/debian stretch main \
+	echo deb http://packages.prosody.im/debian bullseye main \
 	| tee -a /etc/apt/sources.list; \
 	curl -fsSL https://prosody.im/files/prosody-debian-packages.key \
 	| apt-key add -; \
@@ -24,6 +24,7 @@ RUN set -ex; \
 		liblua$LUA_VERSION \
 		libssl1.1 \
 		libidn11 \
+		libicu67 \
 		lua-sec \
 		lua-event \
 		lua-zlib \
@@ -36,8 +37,8 @@ RUN set -ex; \
 		lua-expat \
 		lua-filesystem
 
-ARG prosody_version=0.11.9
-ARG prosody_sha1=632c2dd7794d344d4edbcea18fc1b5f623da5ca4
+ARG prosody_version=0.11.10
+ARG prosody_sha1=4dc8b2f783b43e7a5e781b1fc8aee48b0e106def
 
 ENV PROSODY_VERSION $prosody_version
 ENV PROSODY_SHA1 $prosody_sha1
@@ -64,6 +65,7 @@ RUN set -ex; \
 		liblua5.1-dev \
 		libldap2-dev \
 		libidn11-dev \
+		libicu-dev \
 		libssl-dev \
 	; \
 	\
@@ -84,7 +86,7 @@ ADD configuration/conf.d/ /etc/prosody/conf.d/
 RUN set -ex; \
 	\
 	useradd -rs /bin/false prosody \
-		&& mkdir /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ \
+		&& mkdir -p /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ /var/lib/prosody/ \
 		&& chown -R prosody:prosody /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-* \
 		&& chmod -R 760 /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
 
