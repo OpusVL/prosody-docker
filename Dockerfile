@@ -22,6 +22,7 @@ RUN set -ex; \
 		mercurial \
 		lua$LUA_VERSION \
 		liblua$LUA_VERSION \
+		luarocks \
 		libssl1.1 \
 		libidn11 \
 		libicu67 \
@@ -35,7 +36,9 @@ RUN set -ex; \
 		lua-bitop \
 		lua-socket \
 		lua-expat \
-		lua-filesystem
+		lua-filesystem \
+		lua-readline \
+		lua-unbound
 
 ARG prosody_version=0.11.10
 ARG prosody_sha1=4dc8b2f783b43e7a5e781b1fc8aee48b0e106def
@@ -88,7 +91,7 @@ RUN set -ex; \
 	adduser --disabled-password --quiet --system --home /var/lib/prosody --no-create-home --gecos "Prosody XMPP Server" --group prosody \
 		&& mkdir -p /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ /var/lib/prosody/ \
 		&& chown -R prosody:prosody /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-* \
-		&& chmod -R 760 /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
+		&& chmod -R 750 /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
 
 COPY entrypoint.pl /usr/local/bin/
 ENTRYPOINT ["entrypoint.pl"]
