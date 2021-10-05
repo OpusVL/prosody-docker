@@ -85,7 +85,7 @@ ADD configuration/conf.d/ /etc/prosody/conf.d/
 
 RUN set -ex; \
 	\
-	useradd -rs /bin/false prosody \
+	adduser --disabled-password --quiet --system --home /var/lib/prosody --no-create-home --gecos "Prosody XMPP Server" --group prosody \
 		&& mkdir -p /etc/prosody/cmpt.d/ /etc/prosody/vhost.d/ /var/lib/prosody/ \
 		&& chown -R prosody:prosody /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-* \
 		&& chmod -R 760 /usr/src/prosody-$PROSODY_VERSION /etc/prosody/ /var/lib/prosody/ /opt/prosody-modules-*
