@@ -47,7 +47,7 @@ Prosody configuration file. Allows for extremely granular control of your Prosod
 data stores.
 
 ### `PROSODY_NETWORK_BACKEND`
-Default value: `"select"`
+Default value: `"epoll"`
 
 ### `PROSODY_ALLOW_REGISTRATION`
 Default value: `false`
