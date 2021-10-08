@@ -65,7 +65,7 @@ RUN set -ex; \
 	apt-get install -qq --no-install-suggests --no-install-recommends \
 		build-essential \
 		bsdmainutils \
-		liblua5.1-dev \
+		liblua$LUA_VERSION-dev \
 		libldap2-dev \
 		libidn11-dev \
 		libicu-dev \
