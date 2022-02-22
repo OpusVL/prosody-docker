@@ -40,8 +40,8 @@ RUN set -ex; \
 		lua-readline \
 		lua-unbound
 
-ARG prosody_version=0.11.10
-ARG prosody_sha1=4dc8b2f783b43e7a5e781b1fc8aee48b0e106def
+ARG prosody_version=0.11.13
+ARG prosody_sha1=1cc5a72d98738872d0c1a4c34b1fcb8878348c7d
 
 ENV PROSODY_VERSION $prosody_version
 ENV PROSODY_SHA1 $prosody_sha1
